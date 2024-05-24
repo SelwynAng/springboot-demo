@@ -1,28 +1,38 @@
 package com.example.demo.student;
 
-import org.springframework.cglib.core.Local;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 
+// @Entity annotation marks class as a JPA entity, entities are mapped to database tables.
+// @Table annotation specifies name of database table associated with this entity. By default, table name will be class name, which is "student"
+// This class serves as a model for representing student data in application
 @Entity
 @Table
 public class Student {
+    // @Id annotation marks id property as primary key for entity
     @Id
+
+    // @SequenceGenerator annotation defines a sequence generator for primary key
     @SequenceGenerator(
             name = "student_sequence",
             sequenceName = "student_sequence",
             allocationSize = 1
     )
+
+    // @GeneratedValue annotation specifies how the value for id filed will be generated
     @GeneratedValue(
            strategy = GenerationType.SEQUENCE,
             generator = "student_sequence"
     )
+    // The above annotations configure database to automatically generate unique IDs for each student record
+
     private Long id;
     private String name;
     private String email;
     private LocalDate dob;
+
+    // @Transient annotation marks age property as transient, where it is not persisted to the database
     @Transient
     private Integer age;
 

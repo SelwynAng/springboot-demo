@@ -2,17 +2,18 @@ package com.example.demo.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+// @Service annotation marks the class as a Spring service, which is used to encapsulate business logic and interact with data layer
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
 
+    // @Autowired annotation tells Spring to automatically inject an instance of StudentRepository into this field during object creation
     @Autowired
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -43,6 +44,9 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
+    // @Transactional annotation ensures data consistency across multiple database operations
+    // Guarantees that either all operations within the transaction commit or rollback
+    // @Transactional will make Spring start a transaction, execute method, then commit/rollback
     @Transactional
     public void updateStudent(Long studentId, String name, String email) {
         Student student = studentRepository.findById(studentId)
